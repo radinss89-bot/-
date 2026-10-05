@@ -12,7 +12,7 @@
   --white:#FFFFFF; --ink:#212121; --muted:#757575; --line:#FFCDD2;
   --bg-video: #000000;
 }
-/* Dark Mode Variables */
+/* Dark Mode Default */
 body.dark {
   --white:#121212; --ink:#F5F5F5; --blush:#1E1E1E; --line:#333333; --muted:#AAAAAA;
   --red-soft: #3E1A1A;
@@ -52,11 +52,12 @@ button{cursor:pointer;background:none;border:0}
 .acard .sub{color:var(--muted);margin:6px 0 22px}
 .field{display:block;margin-bottom:14px}
 .field span{display:block;font-size:.88rem;font-weight:500;margin-bottom:5px}
-.field input{
+.field input, .field textarea{
   width:100%;border:1.5px solid var(--line);background:var(--blush);border-radius:14px;padding:11px 15px;
-  transition:border-color .25s,background .25s; color: var(--ink);
+  transition:border-color .25s,background .25s; color: var(--ink); font-family: inherit;
 }
-.field input:focus{outline:none;border-color:var(--red);background:var(--white)}
+.field textarea { resize: vertical; min-height: 80px; }
+.field input:focus, .field textarea:focus{outline:none;border-color:var(--red);background:var(--white)}
 .field input.ltr{direction:ltr;text-align:start}
 .err{color:var(--red-deep);font-size:.9rem;min-height:1.4em;margin:2px 0 10px}
 .acard .pill.solid{width:100%;padding:13px}
@@ -93,11 +94,21 @@ button{cursor:pointer;background:none;border:0}
 .srow{padding:10px 0 0}
 .srow input{width:100%;border:1.5px solid var(--line);background:var(--blush);border-radius:999px;padding:9px 16px; color: var(--ink);}
 .srow input:focus{outline:none;border-color:var(--red);background:var(--white)}
-.chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0 12px;scrollbar-width:none}
-.chips::-webkit-scrollbar{display:none}
-.chip{flex:none;padding:6px 15px;border-radius:999px;border:1.5px solid var(--line);color:var(--muted);font-weight:500;font-size:.9rem;transition:all .25s}
-.chip:hover{border-color:var(--red);color:var(--red-deep)}
-.chip[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+
+/* ---------- Feed Tabs (For You / Following) ---------- */
+.feed-tabs{display:flex;justify-content:center;gap:20px;padding:10px 0 0;margin-bottom:2px;border-bottom:1px solid var(--line);}
+.ftab{font-weight:600;font-size:.95rem;color:var(--muted);padding-bottom:8px;position:relative;cursor:pointer;background:none;border:none;}
+.ftab.active{color:var(--ink);}
+.ftab.active::after{content:'';position:absolute;bottom:0;left:20%;right:20%;height:3px;background:var(--red);border-radius:3px;}
+
+/* ---------- Stories Bar ---------- */
+.stories-bar{display:flex;gap:12px;overflow-x:auto;padding:12px 14px;scrollbar-width:none;background:var(--white);border-bottom:1px solid var(--line);}
+.stories-bar::-webkit-scrollbar{display:none}
+.story{display:flex;flex-direction:column;align-items:center;gap:4px;flex:none;cursor:pointer;}
+.story .circle{width:58px;height:58px;border-radius:50%;border:3px solid transparent;background:linear-gradient(var(--white), var(--white)) padding-box, linear-gradient(45deg, #E53935, #FF8A80) border-box;display:grid;place-items:center;position:relative;}
+.story .circle img{width:100%;height:100%;border-radius:50%;object-fit:cover;}
+.story .circle span{font-weight:700;color:var(--red);font-size:1.2rem;}
+.story small{font-size:.75rem;color:var(--muted);max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 
 /* ---------- bottom nav ---------- */
 .bottom-nav {
@@ -121,13 +132,13 @@ button{cursor:pointer;background:none;border:0}
 .bn.solid:hover { background: var(--red-deep); color: #fff; }
 .bn.solid svg { stroke: #fff; }
 
-/* ---------- reels ---------- */
-.stage{flex:1;min-height:0;position:relative}
+/* ---------- reels / feed ---------- */
+.stage{flex:1;min-height:0;position:relative;overflow-y:auto;}
+.stage::-webkit-scrollbar{display:none}
 .reels{height:100%;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none;overscroll-behavior:contain}
 .reels::-webkit-scrollbar{display:none}
 .reel{position:relative;height:var(--h,100%);scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;user-select:none;-webkit-user-select:none}
 .reel .bg{position:absolute;inset:0;background:var(--bg-video); display: flex; align-items: center; justify-content: center;}
-/* Aspect Ratio Preserved */
 .reel .bg svg,.reel .bg img,.reel .bg video{width:100%;height:100%;display:block;object-fit:contain;}
 .scrim{position:absolute;inset-inline:0;bottom:0;height:48%;background:linear-gradient(transparent,rgba(0,0,0,.72));pointer-events:none}
 .txt{
@@ -137,37 +148,45 @@ button{cursor:pointer;background:none;border:0}
 }
 .meta{position:absolute;inset-inline:0;bottom:0;padding:18px 18px 24px;padding-inline-end:88px;pointer-events:none; color: #fff;}
 .by{display:flex;align-items:center;gap:10px}
-.av{width:34px;height:34px;border-radius:50%;background:var(--red-soft);color:var(--red-deep);display:grid;place-items:center;font-weight:700;flex:none}
-.by b{font-weight:600}
+.av{width:34px;height:34px;border-radius:50%;background:var(--red-soft);color:var(--red-deep);display:grid;place-items:center;font-weight:700;flex:none; cursor:pointer;}
+.by b{cursor:pointer; pointer-events:auto;}
 .tag{font-size:.82rem;opacity:.85;margin-inline-start:2px}
 .cap{margin-top:10px;line-height:1.6;max-height:5.8em;overflow:hidden;overflow-wrap:anywhere}
 .rail{position:absolute;inset-inline-end:12px;bottom:26px;display:flex;flex-direction:column;gap:14px;align-items:center;z-index:2}
 .rw{display:flex;flex-direction:column;align-items:center;gap:3px}
 .rb{
   width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.93);display:grid;place-items:center;
-  color:var(--red-deep);transition:transform .25s,color .25s;
+  color:var(--red-deep);transition:transform .25s,color .25s; touch-action: none;
 }
 .rb:hover{transform:scale(1.06)}
 .rb svg{width:23px;height:23px;transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
 .rb.on{color:var(--red)}
 .rb.on svg{fill:var(--red);stroke:var(--red);transform:scale(1.12)}
 .rw small{font-size:.78rem;font-weight:600; color: #fff;}
-.popheart{position:absolute;left:50%;top:50%;width:110px;height:110px;margin:-55px 0 0 -55px;pointer-events:none;animation:pop .8s ease forwards;z-index:3}
-.popheart svg{width:100%;height:100%;fill:var(--red);stroke:#fff;stroke-width:1.4;stroke-linejoin:round}
-@keyframes pop{0%{transform:scale(.3);opacity:0}25%{transform:scale(1.15);opacity:1}60%{transform:scale(1);opacity:1}100%{transform:scale(1.1);opacity:0}}
-.empty{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px;color:var(--muted);gap:18px}
-.empty .art{width:120px;height:120px;position:relative}
-.empty .art i{position:absolute;border-radius:50%}
-.empty .art i:nth-child(1){inset:0;background:var(--red-soft)}
-.empty .art i:nth-child(2){width:58px;height:58px;background:var(--red);inset-inline-end:2px;bottom:8px;animation:breathe 6s ease-in-out infinite}
-.empty p{max-width:26ch}
 
-.nav{position:fixed;top:50%;inset-inline-end:calc(50% - 230px - 66px);transform:translateY(-50%);display:none;flex-direction:column;gap:10px;z-index:4}
-@media(min-width:700px){.nav{display:flex}}
-.nv{width:44px;height:44px;border-radius:50%;background:var(--white);border:1.5px solid var(--line);display:grid;place-items:center;color:var(--red-deep);transition:background .25s,border-color .25s}
-.nv:hover{border-color:var(--red);background:var(--blush)}
+/* ---------- Profile View ---------- */
+.profile-view{position:absolute;inset:0;background:var(--white);z-index:15;display:flex;flex-direction:column;overflow-y:auto;padding-bottom:60px;}
+.profile-header{padding:20px 16px;display:flex;flex-direction:column;align-items:center;text-align:center;border-bottom:1px solid var(--line);}
+.profile-header .big-av{width:80px;height:80px;border-radius:50%;background:var(--red-soft);color:var(--red-deep);font-size:2rem;font-weight:700;display:grid;place-items:center;margin-bottom:10px;}
+.profile-header h2{font-size:1.3rem;font-weight:600;display:flex;align-items:center;gap:6px;}
+.twin-badge{background:var(--red);color:#fff;font-size:.7rem;padding:2px 8px;border-radius:999px;font-weight:600;}
+.profile-header .handle{color:var(--muted);font-size:.9rem;margin-bottom:10px;}
+.profile-header .bio{max-width:300px;font-size:.95rem;margin-bottom:16px;}
+.profile-stats{display:flex;gap:24px;margin-bottom:16px;}
+.profile-stats div{display:flex;flex-direction:column;align-items:center;}
+.profile-stats b{font-size:1.1rem;}
+.profile-stats span{font-size:.8rem;color:var(--muted);}
+.profile-actions{display:flex;gap:10px;}
+.profile-posts{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:2px;}
+.profile-posts .grid-item{position:relative;aspect-ratio:1;background:var(--bg-video);overflow:hidden;cursor:pointer;}
+.profile-posts .grid-item img,.profile-posts .grid-item video{width:100%;height:100%;object-fit:cover;}
+.profile-posts .grid-item .text-preview{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:10px;text-align:center;font-size:.8rem;background:var(--red-soft);color:var(--ink);overflow:hidden;}
 
-/* ---------- comments sheet ---------- */
+/* ---------- Edit Profile Dialog ---------- */
+.edit-profile-dialog{padding:20px;}
+.edit-profile-dialog h2{margin-bottom:16px;font-size:1.2rem;}
+
+/* ---------- Comments Sheet ---------- */
 .veil{position:absolute;inset:0;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .3s;z-index:20}
 .veil.open{opacity:1;pointer-events:auto}
 .sheet{
@@ -187,7 +206,7 @@ button{cursor:pointer;background:none;border:0}
 .cbox input{flex:1;min-width:0;border:1.5px solid var(--line);border-radius:999px;padding:9px 16px;background:var(--blush); color: var(--ink);}
 .cbox input:focus{outline:none;border-color:var(--red);background:var(--white)}
 
-/* ---------- composer ---------- */
+/* ---------- Composer / Dialogs ---------- */
 dialog{
   border:0;border-radius:26px;padding:0;width:min(520px,94vw);background:var(--white);color:var(--ink);margin:auto;
   box-shadow:0 30px 80px rgba(0,0,0,.18)
@@ -247,16 +266,24 @@ dialog::backdrop{background:rgba(0,0,0,.4);backdrop-filter:blur(6px)}
       <div class="logo"><span class="dot" aria-hidden="true"></span><span data-t="brand"></span></div>
     </div>
     <div class="srow" id="srow" hidden><input id="q" type="search" autocomplete="off"></div>
-    <nav class="chips" id="chips"></nav>
+    
+    <!-- Feed Tabs (For You / Following) -->
+    <nav class="feed-tabs" id="feedTabs">
+      <button class="ftab active" data-act="feedTab" data-tab="foryou" data-t="forYou"></button>
+      <button class="ftab" data-act="feedTab" data-tab="following" data-t="following"></button>
+    </nav>
   </header>
   
   <div class="stage">
+    <!-- Stories Bar -->
+    <div class="stories-bar" id="storiesBar"></div>
+    
     <div class="reels" id="reels"></div>
   </div>
   
   <!-- Bottom Navigation -->
   <nav class="bottom-nav">
-    <button class="bn" data-act="home" data-label="home"><svg viewBox="0 0 24 24"><path d="M3 9.5 12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V9.5z"/></svg></button>
+    <button class="bn active" data-act="home" data-label="home"><svg viewBox="0 0 24 24"><path d="M3 9.5 12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V9.5z"/></svg></button>
     <button class="bn" data-act="search" id="searchBtn" data-label="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.500 4.500"/></svg></button>
     <button class="bn solid" data-act="compose" data-label="share"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
     <button class="bn" data-act="menu" id="meBtn" data-label="profile"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></button>
@@ -265,6 +292,8 @@ dialog::backdrop{background:rgba(0,0,0,.4);backdrop-filter:blur(6px)}
   <div class="menu" id="menu" hidden>
     <div class="who" id="meName"></div>
     <button data-act="toggleDark" data-t="darkMode"></button>
+    <button data-act="goProfile" data-t="profile"></button>
+    <button data-act="editProfile" data-t="editProfile"></button>
     <button data-act="logout" data-t="logout"></button>
   </div>
   
@@ -272,11 +301,13 @@ dialog::backdrop{background:rgba(0,0,0,.4);backdrop-filter:blur(6px)}
   <aside class="sheet" id="sheet" aria-live="polite"></aside>
 </div>
 
-<div class="nav" id="nav" hidden>
-  <button class="nv" data-act="up" data-label="up"><svg viewBox="0 0 24 24"><path d="m6 14 6-6 6 6"/></svg></button>
-  <button class="nv" data-act="down" data-label="down"><svg viewBox="0 0 24 24"><path d="m6 10 6 6 6-6"/></svg></button>
+<!-- Profile View -->
+<div class="profile-view" id="profileView" hidden>
+  <div class="profile-header" id="profileHeader"></div>
+  <div class="profile-posts" id="profilePosts"></div>
 </div>
 
+<!-- ============ DIALOGS ============ -->
 <dialog id="composeDlg">
   <div class="composer">
     <button class="ib x" data-act="closeCompose" data-label="close"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
@@ -289,44 +320,67 @@ dialog::backdrop{background:rgba(0,0,0,.4);backdrop-filter:blur(6px)}
     </div>
     <div class="moods" id="moods"><small data-t="bg"></small></div>
     <div class="cfoot">
-      <select id="cTopic" aria-label="Topic"></select>
       <button class="pill solid" data-act="publish" data-t="post"></button>
     </div>
   </div>
 </dialog>
+
+<dialog id="editProfileDlg">
+  <div class="composer edit-profile-dialog">
+    <button class="ib x" data-act="closeEditProfile" data-label="close"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <h2 data-t="editProfile"></h2>
+    <label class="field"><span data-t="name"></span><input id="epName" maxlength="40"></label>
+    <label class="field"><span data-t="username"></span><input id="epUser" class="ltr" maxlength="20"></label>
+    <label class="field"><span data-t="bio"></span><textarea id="epBio" maxlength="160"></textarea></label>
+    <button class="pill solid" data-act="saveProfile" data-t="save" style="width:100%;margin-top:10px;"></button>
+  </div>
+</dialog>
+
+<dialog id="repostDlg">
+  <div class="composer">
+    <button class="ib x" data-act="closeRepost" data-label="close"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <h2 data-t="repostTitle"></h2>
+    <textarea id="repostText" dir="auto" placeholder="..." style="min-height:80px;"></textarea>
+    <div class="cfoot" style="justify-content:flex-end;">
+      <button class="pill solid" data-act="publishRepost" data-t="repostBtn"></button>
+    </div>
+  </div>
+</dialog>
+
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 /* ================= strings ================= */
 const T={
  en:{brand:'W',lang:'فارسی',
-  signupTitle:'Create your account',loginTitle:'Welcome back',signupSub:'Join a quiet place to explore.',loginSub:'Log in to keep exploring.',
-  name:'Name',username:'Username',password:'Password',signup:'Sign up',login:'Log in',
+  signupTitle:'Create your account',loginTitle:'Welcome back',signupSub:'Join W.',loginSub:'Log in to keep exploring.',
+  name:'Name',username:'Username',password:'Password',signup:'Sign up',login:'Log in',bio:'Bio',
   haveAcc:'Already have an account?',noAcc:'New here?',toLogin:'Log in',toSignup:'Create an account',
   errName:'Enter your name',errUser:'Use 3 to 20 letters, numbers or underscores',errPass:'Use at least 6 characters',
   errTaken:'That username is taken',errLogin:'Username or password is wrong',
   search:'Search',searchPh:'Search posts and people',share:'Share',up:'Previous',down:'Next',close:'Close',
-  home:'Home',profile:'Profile',darkMode:'Dark Mode',
-  all:'All',thoughts:'Thoughts',art:'Art',places:'Places',music:'Music',food:'Food',books:'Books',
-  like:'Like',save:'Save',comment:'Comments',comments:'Comments',noCm:'No comments yet. Say something kind.',addCm:'Add a comment',send:'Send',
+  home:'Home',profile:'Profile',darkMode:'Light Mode',editProfile:'Edit Profile',save:'Save',
+  forYou:'For You',following:'Following',twin:'Twin',follow:'Follow',unfollow:'Unfollow',posts:'Posts',
+  like:'Like',savePost:'Save',comment:'Comments',comments:'Comments',noCm:'No comments yet. Say something kind.',addCm:'Add a comment',send:'Send',
   empty:'No posts here yet. Be the first to share something.',cTitle:'Share something',cPh:'What are you noticing today?',
   addMedia:'Add photo or video',bg:'Background',post:'Post',published:'Posted',saved:'Saved',unsaved:'Removed from saved',
-  needText:'Add some text or a photo or video first',logout:'Log out',you:'You'},
+  needText:'Add some text or a photo or video first',logout:'Log out',you:'You',
+  repostTitle:'Add a comment to repost',repostBtn:'Repost',repostedBy:'Reposted by'},
  fa:{brand:'W',lang:'English',
-  signupTitle:'حساب خودت را بساز',loginTitle:'خوش برگشتی',signupSub:'به جایی آرام برای کشف کردن بپیوند.',loginSub:'وارد شو و ادامه بده.',
-  name:'نام',username:'نام کاربری',password:'رمز عبور',signup:'ثبت‌نام',login:'ورود',
+  signupTitle:'حساب خودت را بساز',loginTitle:'خوش برگشتی',signupSub:'به W بپیوند.',loginSub:'وارد شو و ادامه بده.',
+  name:'نام',username:'نام کاربری',password:'رمز عبور',signup:'ثبت‌نام',login:'ورود',bio:'بیوگرافی',
   haveAcc:'قبلاً ثبت‌نام کرده‌ای؟',noAcc:'تازه آمده‌ای؟',toLogin:'وارد شو',toSignup:'حساب بساز',
   errName:'نامت را وارد کن',errUser:'از ۳ تا ۲۰ حرف انگلیسی، عدد یا زیرخط استفاده کن',errPass:'حداقل ۶ کاراکتر استفاده کن',
   errTaken:'این نام کاربری گرفته شده',errLogin:'نام کاربری یا رمز عبور اشتباه است',
   search:'جستجو',searchPh:'جستجوی پست‌ها و آدم‌ها',share:'ارسال',up:'قبلی',down:'بعدی',close:'بستن',
-  home:'خانه',profile:'پروفایل',darkMode:'حالت تاریک',
-  all:'همه',thoughts:'نوشته‌ها',art:'هنر',places:'مکان‌ها',music:'موسیقی',food:'غذا',books:'کتاب',
-  like:'پسندیدن',save:'ذخیره',comment:'نظرها',comments:'نظرها',noCm:'هنوز نظری نیست. حرف مهربانی بزن.',addCm:'نظرت را بنویس',send:'ارسال',
+  home:'خانه',profile:'پروفایل',darkMode:'حالت روشن',editProfile:'ویرایش پروفایل',save:'ذخیره',
+  forYou:'برای تو',following:'دنبال‌شده‌ها',twin:'قل',follow:'دنبال کردن',unfollow:'لغو دنبال',posts:'پست‌ها',
+  like:'پسندیدن',savePost:'ذخیره',comment:'نظرها',comments:'نظرها',noCm:'هنوز نظری نیست. حرف مهربانی بزن.',addCm:'نظرت را بنویس',send:'ارسال',
   empty:'هنوز پستی اینجا نیست. اولین نفری باش که چیزی می‌گذارد.',cTitle:'چیزی به اشتراک بگذار',cPh:'امروز چه چیزی توجهت را جلب کرد؟',
   addMedia:'افزودن عکس یا ویدیو',bg:'پس‌زمینه',post:'ارسال',published:'منتشر شد',saved:'ذخیره شد',unsaved:'از ذخیره‌ها حذف شد',
-  needText:'اول متنی بنویس یا عکس یا ویدیو اضافه کن',logout:'خروج',you:'شما'}
+  needText:'اول متنی بنویس یا عکس یا ویدیو اضافه کن',logout:'خروج',you:'شما',
+  repostTitle:'متن ریپست خود را بنویسید',repostBtn:'ریپست',repostedBy:'ریپست شده توسط'}
 };
-const TOPICS=['thoughts','art','places','music','food','books'];
 const MOODS=[
  {bg:'#E53935',ink:'#FFFFFF',s1:'#EF5350',s2:'#C62828'},
  {bg:'#FFEBEE',ink:'#212121',s1:'#FFCDD2',s2:'#EF9A9A'},
@@ -336,11 +390,21 @@ const MOODS=[
  {bg:'#FFEBEE',ink:'#C62828',s1:'#FFFFFF',s2:'#EF9A9A'}
 ];
 
+/* ================= Mock Data (for testing) ================= */
+const MOCK_USERS = [
+  {name:'Ali', user:'ali', bio:'Just chilling', avatar:''},
+  {name:'Sara', user:'sara', bio:'Art lover', avatar:''},
+  {name:'Reza', user:'reza', bio:'Tech geek', avatar:''}
+];
+
 /* ================= state & persistence ================= */
-const STORAGE_KEY = 'w_app_state_v1';
+const STORAGE_KEY = 'w_app_state_v2';
 const defaultState = {
-  lang:'en', mode:'signup', user:null, accounts:[], topic:'all', q:'',
-  posts:[], liked:[], saved:[], openId:null, mood:0, file:null, nextId:1, darkMode:false
+  lang:'en', mode:'signup', user:null, accounts:[], 
+  view: 'feed', feedTab: 'foryou', targetProfile: null,
+  posts:[], liked:[], saved:[], following:[], followers:['ali', 'sara'], // Default followers for testing Twin
+  openId:null, mood:0, file:null, nextId:1, darkMode:true, // Dark mode default
+  stories: []
 };
 
 function loadState() {
@@ -356,20 +420,18 @@ const S = {
   ...loadState(),
   liked: new Set(loadState().liked || []),
   saved: new Set(loadState().saved || []),
-  posts: (loadState().posts || []).filter(p => !p.media) // Keep only text posts to avoid broken media URLs
+  following: new Set(loadState().following || []),
+  followers: new Set(loadState().followers || []),
+  posts: (loadState().posts || []).filter(p => !p.media)
 };
 
 function saveState() {
   const stateToSave = {
-    lang: S.lang,
-    mode: S.mode,
-    user: S.user,
-    accounts: S.accounts,
-    posts: S.posts.filter(p => !p.media), // Don't save blob URLs
-    liked: Array.from(S.liked),
-    saved: Array.from(S.saved),
-    nextId: S.nextId,
-    darkMode: S.darkMode
+    lang: S.lang, mode: S.mode, user: S.user, accounts: S.accounts,
+    view: S.view, feedTab: S.feedTab, targetProfile: S.targetProfile,
+    posts: S.posts.filter(p => !p.media), liked: Array.from(S.liked), saved: Array.from(S.saved),
+    following: Array.from(S.following), followers: Array.from(S.followers),
+    nextId: S.nextId, darkMode: S.darkMode, stories: S.stories
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
 }
@@ -383,6 +445,7 @@ const IC={
  heart:'<svg viewBox="0 0 24 24"><path d="M12 20s-8-4.700-8-10.500C4 6.500 6 4.500 8.500 4.500c1.500 0 2.800.8 3.500 2 .7-1.200 2-2 3.500-2C18 4.500 20 6.500 20 9.500 20 15.300 12 20 12 20Z"/></svg>',
  chat:'<svg viewBox="0 0 24 24"><path d="M4 5.500h16v10.500H10l-4.500 3.500V16H4z"/></svg>',
  mark:'<svg viewBox="0 0 24 24"><path d="M6.500 3.500h11v17l-5.500-4-5.500 4z"/></svg>',
+ share:'<svg viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M16 6l-4-4-4 4M12 2v13"/></svg>',
  x:'<svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 6l12 12M18 6 6 18"/></svg>'
 };
 
@@ -395,12 +458,9 @@ function applyLang(){
   document.querySelectorAll('[data-label]').forEach(e=>e.setAttribute('aria-label',tr(e.dataset.label)));
   $('#authLang').textContent=tr('lang');
   $('#q').placeholder=tr('searchPh'); $('#cText').placeholder=tr('cPh');
-  $('#cTopic').innerHTML=TOPICS.map(k=>`<option value="${k}">${tr(k)}</option>`).join('');
   renderAuth(); renderMoods();
   if(S.user){
-    renderChips();
-    const r=$('#reels'); const i=Math.round(r.scrollTop/(r.clientHeight||1));
-    renderReels(); r.scrollTop=i*r.clientHeight;
+    renderApp();
     if(S.openId) renderSheet();
   }
 }
@@ -425,7 +485,7 @@ $('#authForm').addEventListener('submit',e=>{
     if(!/^[a-z0-9_]{3,20}$/.test(user)) return err('errUser');
     if(pass.length<6) return err('errPass');
     if(S.accounts.some(a=>a.user===user)) return err('errTaken');
-    const acc={name,user,pass}; S.accounts.push(acc); enter(acc);
+    const acc={name,user,pass,bio:'',avatar:''}; S.accounts.push(acc); enter(acc);
   }else{
     const acc=S.accounts.find(a=>a.user===user&&a.pass===pass);
     if(!acc) return err('errLogin');
@@ -435,26 +495,52 @@ $('#authForm').addEventListener('submit',e=>{
 function enter(acc, skipSave = false){
   S.user=acc; $('#aErr').textContent='';
   $('#fName').value='';$('#fUser').value='';$('#fPass').value='';
-  $('#auth').hidden=true; $('#app').hidden=false; $('#nav').hidden=false;
-  $('#meBtn').innerHTML = `<span style="font-weight:700;">${ini(acc.name)}</span>`;
+  $('#auth').hidden=true; $('#app').hidden=false;
   $('#meName').textContent='@'+acc.user;
-  S.topic='all'; S.q=''; $('#q').value='';
-  renderChips(); setH(); renderReels();
+  S.view = 'feed'; S.feedTab = 'foryou'; S.targetProfile = null;
+  $('#feedTabs').hidden = false;
+  renderApp();
   if (!skipSave) saveState();
 }
 function logout(){
   S.user=null; S.mode='login'; closeSheet(); $('#menu').hidden=true;
-  $('#app').hidden=true; $('#nav').hidden=true; $('#auth').hidden=false; renderAuth();
+  $('#app').hidden=true; $('#auth').hidden=false; renderAuth();
   saveState();
 }
 
-/* ================= feed ================= */
+/* ================= App Navigation & Views ================= */
+function renderApp() {
+  if (S.view === 'profile') {
+    $('#profileView').hidden = false;
+    $('#feedTabs').hidden = true;
+    renderProfile(S.targetProfile || S.user.user);
+  } else {
+    $('#profileView').hidden = true;
+    $('#feedTabs').hidden = false;
+    renderStories();
+    renderReels();
+  }
+  setH();
+}
+
+/* ================= Stories ================= */
+function renderStories() {
+  const bar = $('#storiesBar');
+  let html = `<div class="story" data-act="addStory"><div class="circle"><span>+</span></div><small>${tr('addMedia')}</small></div>`;
+  S.stories.forEach(s => {
+    html += `<div class="story"><div class="circle"><img src="${s.url}" alt=""></div><small>${esc(s.name)}</small></div>`;
+  });
+  bar.innerHTML = html;
+}
+
+/* ================= Feed ================= */
 function visible(){
   const q=S.q.trim().toLowerCase();
-  return S.posts.filter(p=>(S.topic==='all'||p.topic===S.topic)&&(!q||(p.text+' '+p.author+' '+p.handle).toLowerCase().includes(q)));
-}
-function renderChips(){
-  $('#chips').innerHTML=['all',...TOPICS].map(k=>`<button class="chip" data-act="chip" data-k="${k}" aria-pressed="${S.topic===k}">${tr(k)}</button>`).join('');
+  let list = S.posts;
+  if (S.feedTab === 'following') {
+    list = list.filter(p => S.following.has(p.handle) || p.handle === S.user.user);
+  }
+  return list.filter(p=>(!q||(p.text+' '+p.author+' '+p.handle).toLowerCase().includes(q)));
 }
 const inkOf=p=>p.media?'#fff':MOODS[p.mood].ink;
 function railHTML(p){
@@ -462,6 +548,7 @@ function railHTML(p){
   return `<div class="rail" style="color:${c}">
     <div class="rw"><button class="rb ${lk?'on':''}" data-act="like" data-id="${p.id}" aria-pressed="${lk}" aria-label="${tr('like')}">${IC.heart}</button><small>${fmt(p.likes+(lk?1:0))}</small></div>
     <div class="rw"><button class="rb" data-act="comment" data-id="${p.id}" aria-label="${tr('comment')}">${IC.chat}</button><small>${fmt(p.cm.length)}</small></div>
+    <div class="rw"><button class="rb" data-act="share" data-id="${p.id}" aria-label="${tr('share')}">${IC.share}</button></div>
     <div class="rw"><button class="rb ${sv?'on':''}" data-act="save" data-id="${p.id}" aria-pressed="${sv}" aria-label="${tr('save')}">${IC.mark}</button></div>
   </div>`;
 }
@@ -478,10 +565,16 @@ function reelHTML(p){
     body=`<div class="txt" dir="auto" style="color:${m.ink}">${esc(p.text)}</div>`;
   }
   const cap=p.media&&p.text?`<p class="cap" dir="auto">${esc(p.text)}</p>`:'';
+  const repostBadge = p.repost ? `<div style="font-size:.8rem; margin-bottom:4px; opacity:0.9;">↻ ${tr('repostedBy')} @${p.repost.originalHandle}</div>` : '';
+  
   return `<section class="reel" data-id="${p.id}">
     <div class="bg">${bg}</div>${body}
     <div class="meta" style="color:${c}">
-      <div class="by"><span class="av">${esc(ini(p.author))}</span><div><b>${esc(p.author)}</b> <span class="tag">${tr(p.topic)}</span></div></div>${cap}
+      ${repostBadge}
+      <div class="by">
+        <span class="av" data-act="goUser" data-user="${p.handle}">${esc(ini(p.author))}</span>
+        <div><b data-act="goUser" data-user="${p.handle}">${esc(p.author)}</b></div>
+      </div>${cap}
     </div>${railHTML(p)}</section>`;
 }
 function renderReels(){
@@ -503,26 +596,48 @@ function observe(){
   }),{root:$('#reels'),threshold:[0,.6,1]});
   document.querySelectorAll('.reel').forEach(r=>io.observe(r));
 }
-function setH(){const r=$('#reels');r.style.setProperty('--h',r.clientHeight+'px')}
+function setH(){const r=$('#reels');if(r)r.style.setProperty('--h',r.clientHeight+'px')}
 window.addEventListener('resize',()=>{if(S.user)setH()});
 
-/* tap: double-tap likes, single tap toggles video */
-let lastTap=0,lastId=0,tapT;
-$('#reels').addEventListener('click',e=>{
-  if(e.target.closest('button')) return;
-  const r=e.target.closest('.reel'); if(!r) return;
-  const id=+r.dataset.id, now=Date.now();
-  if(now-lastTap<300&&lastId===id){
-    clearTimeout(tapT); lastTap=0;
-    if(!S.liked.has(id)){S.liked.add(id);updateRail(id); saveState();}
-    const h=document.createElement('div');h.className='popheart';h.innerHTML=IC.heart;r.appendChild(h);setTimeout(()=>h.remove(),850);
-  }else{
-    lastTap=now; lastId=id; clearTimeout(tapT);
-    tapT=setTimeout(()=>{const v=r.querySelector('video'); if(v) v.paused?v.play():v.pause()},300);
-  }
-});
+/* ================= Profile ================= */
+function renderProfile(username) {
+  const isMe = username === S.user.user;
+  const acc = isMe ? S.user : (S.accounts.find(a => a.user === username) || MOCK_USERS.find(u => u.user === username));
+  if (!acc) return;
 
-/* ================= comments ================= */
+  const userPosts = S.posts.filter(p => p.handle === username);
+  const isFollowing = S.following.has(username);
+  const isFollower = S.followers.has(username);
+  const isTwin = isFollowing && isFollower;
+
+  $('#profileHeader').innerHTML = `
+    <div class="big-av">${ini(acc.name)}</div>
+    <h2>${esc(acc.name)} ${isTwin ? `<span class="twin-badge">${tr('twin')} 👯‍♂️</span>` : ''}</h2>
+    <div class="handle">@${esc(acc.user)}</div>
+    <div class="bio">${esc(acc.bio || '...')}</div>
+    <div class="profile-stats">
+      <div><b>${fmt(userPosts.length)}</b><span>${tr('posts')}</span></div>
+      <div><b>${fmt(isMe ? S.followers.size : Math.floor(Math.random()*100))}</b><span>Followers</span></div>
+      <div><b>${fmt(isMe ? S.following.size : Math.floor(Math.random()*100))}</b><span>Following</span></div>
+    </div>
+    <div class="profile-actions">
+      ${isMe 
+        ? `<button class="pill ghost" data-act="editProfile">${tr('editProfile')}</button>`
+        : `<button class="pill ${isFollowing ? 'ghost' : 'solid'}" data-act="toggleFollow" data-user="${username}">${isFollowing ? tr('unfollow') : tr('follow')}</button>`
+      }
+    </div>
+  `;
+
+  $('#profilePosts').innerHTML = userPosts.length ? userPosts.map(p => {
+    if (p.media) {
+      return `<div class="grid-item"><img src="${p.media.url}" alt=""></div>`;
+    } else {
+      return `<div class="grid-item"><div class="text-preview">${esc(p.text.substring(0, 50))}...</div></div>`;
+    }
+  }).join('') : `<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--muted);">${tr('empty')}</div>`;
+}
+
+/* ================= Comments ================= */
 function renderSheet(){
   const p=S.posts.find(x=>x.id===S.openId); if(!p) return;
   const list=p.cm.length?p.cm.map(c=>`<div class="cm"><span class="av">${esc(ini(c.a))}</span><div><b>${esc(c.a)}</b><br><span dir="auto">${esc(c.t)}</span></div></div>`).join(''):`<p class="none">${tr('noCm')}</p>`;
@@ -533,12 +648,13 @@ function renderSheet(){
 function openSheet(id){S.openId=id;renderSheet();$('#sheet').classList.add('open');$('#veil').classList.add('open')}
 function closeSheet(){S.openId=null;$('#sheet').classList.remove('open');$('#veil').classList.remove('open')}
 
-/* ================= composer ================= */
+/* ================= Composer ================= */
 function renderMoods(){
-  const box=$('#moods'); box.querySelectorAll('.mood').forEach(b=>b.remove());
+  const box=$('#moods'); if(!box) return;
+  box.querySelectorAll('.mood').forEach(b=>b.remove());
   MOODS.forEach((m,i)=>{
     const b=document.createElement('button');b.className='mood';b.type='button';b.dataset.act='mood';b.dataset.i=i;
-    b.style.background=m.bg;b.setAttribute('aria-pressed',S.mood===i);b.setAttribute('aria-label',tr('bg')+' '+(i+1));box.appendChild(b);
+    b.style.background=m.bg;b.setAttribute('aria-pressed',S.mood===i);box.appendChild(b);
   });
 }
 function resetComposer(){
@@ -554,12 +670,55 @@ let tt;
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),1800)}
 function scrollReels(dir){const r=$('#reels');r.scrollBy({top:dir*r.clientHeight,behavior:'smooth'})}
 
-/* ================= events ================= */
+/* ================= Long Press Logic ================= */
+let pressTimer;
+let isLongPress = false;
+
+document.addEventListener('pointerdown', e => {
+  const likeBtn = e.target.closest('[data-act="like"]');
+  if (likeBtn) {
+    isLongPress = false;
+    pressTimer = setTimeout(() => {
+      isLongPress = true;
+      const id = +likeBtn.dataset.id;
+      openRepostDialog(id);
+    }, 600); // 600ms for long press
+  }
+});
+
+document.addEventListener('pointerup', e => {
+  if (pressTimer) clearTimeout(pressTimer);
+});
+
+document.addEventListener('pointerleave', e => {
+  if (pressTimer) clearTimeout(pressTimer);
+});
+
+/* ================= Repost ================= */
+let repostTargetId = null;
+function openRepostDialog(id) {
+  repostTargetId = id;
+  $('#repostText').value = '';
+  $('#repostDlg').showModal();
+}
+
+/* ================= Events ================= */
 document.addEventListener('click',e=>{
   if(!e.target.closest('#menu,#meBtn')) $('#menu').hidden=true;
   if(e.target.id==='composeDlg'){e.target.close();return}
-  const el=e.target.closest('[data-act]'); if(!el) return;
-  const a=el.dataset.act, id=+el.dataset.id;
+  if(e.target.id==='editProfileDlg'){e.target.close();return}
+  if(e.target.id==='repostDlg'){e.target.close();return}
+
+  const el=e.target.closest('[data-act]'); 
+  if (!el) return;
+  const a=el.dataset.act, id=+el.dataset.id, user=el.dataset.user;
+
+  // Prevent like action if it was a long press
+  if (a === 'like' && isLongPress) {
+    isLongPress = false;
+    return;
+  }
+
   switch(a){
     case 'lang': S.lang=S.lang==='en'?'fa':'en'; applyLang(); saveState(); break;
     case 'mode': S.mode=S.mode==='signup'?'login':'signup'; $('#aErr').textContent=''; renderAuth(); break;
@@ -568,62 +727,134 @@ document.addEventListener('click',e=>{
     case 'toggleDark': 
       S.darkMode = !S.darkMode;
       document.body.classList.toggle('dark', S.darkMode);
+      $('#menu').hidden = true;
       saveState();
       break;
     case 'home': 
-      $('#reels').scrollTo({top:0, behavior:'smooth'}); 
+      S.view = 'feed'; S.targetProfile = null;
+      renderApp();
       break;
+    case 'goProfile':
+      S.view = 'profile'; S.targetProfile = S.user.user;
+      $('#menu').hidden = true;
+      renderApp();
+      break;
+    case 'goUser':
+      S.view = 'profile'; S.targetProfile = user;
+      renderApp();
+      break;
+    case 'editProfile':
+      $('#epName').value = S.user.name;
+      $('#epUser').value = S.user.user;
+      $('#epBio').value = S.user.bio || '';
+      $('#editProfileDlg').showModal();
+      break;
+    case 'saveProfile': {
+      const newName = $('#epName').value.trim();
+      const newUser = $('#epUser').value.trim().toLowerCase();
+      const newBio = $('#epBio').value.trim();
+      if (!newName || !/^[a-z0-9_]{3,20}$/.test(newUser)) { toast(tr('errUser')); break; }
+      if (newUser !== S.user.user && S.accounts.some(a=>a.user===newUser)) { toast(tr('errTaken')); break; }
+      
+      // Update in accounts
+      const acc = S.accounts.find(a => a.user === S.user.user);
+      if (acc) { acc.name = newName; acc.user = newUser; acc.bio = newBio; }
+      
+      // Update current user
+      S.user.name = newName;
+      S.user.user = newUser;
+      S.user.bio = newBio;
+
+      // Update posts
+      S.posts.forEach(p => { if (p.handle === S.user.user) { p.author = newName; p.handle = newUser; } });
+
+      $('#editProfileDlg').close();
+      saveState();
+      renderApp();
+      toast(tr('saved'));
+      break;
+    }
+    case 'toggleFollow': {
+      if (S.following.has(user)) {
+        S.following.delete(user);
+      } else {
+        S.following.add(user);
+      }
+      saveState();
+      renderProfile(user);
+      break;
+    }
+    case 'addStory': {
+      const input = document.createElement('input');
+      input.type = 'file'; input.accept = 'image/*';
+      input.onchange = e => {
+        const file = e.target.files[0];
+        if (file) {
+          const url = URL.createObjectURL(file);
+          S.stories.push({ id: Date.now(), name: S.user.name, url });
+          saveState();
+          renderStories();
+          toast(tr('published'));
+        }
+      };
+      input.click();
+      break;
+    }
+    case 'feedTab': {
+      S.feedTab = el.dataset.tab;
+      document.querySelectorAll('.ftab').forEach(b => b.classList.toggle('active', b.dataset.tab === S.feedTab));
+      renderReels();
+      break;
+    }
     case 'search': {
-      const s=$('#srow'); 
-      s.hidden=!s.hidden; 
+      const s=$('#srow'); s.hidden=!s.hidden; 
       if(!s.hidden) $('#q').focus(); 
       else {S.q='';$('#q').value='';renderReels()} 
-      setH(); 
-      break;}
-    case 'chip': S.topic=el.dataset.k; renderChips(); renderReels(); break;
+      setH(); break;
+    }
     case 'like': S.liked.has(id)?S.liked.delete(id):S.liked.add(id); updateRail(id); saveState(); break;
     case 'save': if(S.saved.has(id)){S.saved.delete(id);toast(tr('unsaved'))}else{S.saved.add(id);toast(tr('saved'))} updateRail(id); saveState(); break;
+    case 'share': toast(tr('share') + ' ...'); break; // Mock share
     case 'comment': openSheet(id); break;
     case 'closeSheet': closeSheet(); break;
     case 'sendCm': {
       const v=$('#cmIn').value.trim(); if(!v) break;
       const p=S.posts.find(x=>x.id===S.openId); p.cm.push({a:S.user.name,t:v});
       renderSheet(); updateRail(p.id); saveState(); const c=$('#clist'); c.scrollTop=c.scrollHeight; break;}
-    case 'up': scrollReels(-1); break;
-    case 'down': scrollReels(1); break;
     case 'compose': $('#composeDlg').showModal(); $('#cText').focus(); break;
     case 'closeCompose': $('#composeDlg').close(); break;
+    case 'closeEditProfile': $('#editProfileDlg').close(); break;
+    case 'closeRepost': $('#repostDlg').close(); break;
     case 'pickFile': $('#cFile').click(); break;
     case 'mood': S.mood=+el.dataset.i; renderMoods(); break;
     case 'publish': {
       const text=$('#cText').value.trim();
       if(!text&&!S.file){toast(tr('needText'));break}
-      const post={id:S.nextId++,author:S.user.name,handle:S.user.user,topic:$('#cTopic').value,text,mood:S.mood,likes:0,cm:[],
+      const post={id:S.nextId++,author:S.user.name,handle:S.user.user,text,mood:S.mood,likes:0,cm:[],
         media:S.file?{type:S.file.type.startsWith('video')?'video':'image',url:URL.createObjectURL(S.file)}:null};
       S.posts.unshift(post); $('#composeDlg').close(); resetComposer();
-      S.topic='all'; S.q=''; $('#q').value=''; renderChips(); renderReels(); toast(tr('published')); saveState(); break;}
+      S.view='feed'; S.feedTab='foryou'; renderApp(); toast(tr('published')); saveState(); break;}
+    case 'publishRepost': {
+      const text = $('#repostText').value.trim();
+      const originalPost = S.posts.find(x => x.id === repostTargetId);
+      if (!originalPost) break;
+      const repost = {
+        id: S.nextId++, author: S.user.name, handle: S.user.user, text: text, mood: 0, likes: 0, cm: [],
+        media: null, repost: { originalId: originalPost.id, originalHandle: originalPost.handle }
+      };
+      S.posts.unshift(repost);
+      $('#repostDlg').close();
+      S.view='feed'; S.feedTab='foryou'; renderApp(); 
+      toast(tr('repostBtn') + ' شد'); saveState(); break;
+    }
   }
 });
 $('#q').addEventListener('input',e=>{S.q=e.target.value;renderReels()});
-document.addEventListener('keydown',e=>{
-  if(e.key==='Enter'&&e.target.id==='cmIn'){e.preventDefault();document.querySelector('[data-act="sendCm"]').click();return}
-  if(e.key==='Escape'&&S.openId){closeSheet();return}
-  if(!S.user||/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)||$('#composeDlg').open) return;
-  if(e.key==='ArrowDown'){e.preventDefault();scrollReels(1)}
-  if(e.key==='ArrowUp'){e.preventDefault();scrollReels(-1)}
-});
 
 /* ================= init ================= */
-// Apply saved theme
 if (S.darkMode) document.body.classList.add('dark');
-
-// Apply saved language
 applyLang();
-
-// Auto-login if user exists
-if (S.user) {
-  enter(S.user, true);
-}
+if (S.user) enter(S.user, true);
 </script>
 </body>
 </html>
