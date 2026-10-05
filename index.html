@@ -12,7 +12,6 @@
   --white:#FFFFFF; --ink:#212121; --muted:#757575; --line:#FFCDD2;
   --bg-video: #000000;
 }
-/* Dark Mode Default */
 body.dark {
   --white:#121212; --ink:#F5F5F5; --blush:#1E1E1E; --line:#333333; --muted:#AAAAAA;
   --red-soft: #3E1A1A;
@@ -37,25 +36,18 @@ button{cursor:pointer;background:none;border:0}
 .pill.ghost{border:1.5px solid var(--line);color:var(--red-deep)}
 .pill.ghost:hover{border-color:var(--red);background:var(--blush)}
 
-/* ---------- auth ---------- */
 .auth{min-height:100dvh;display:grid;place-items:center;padding:24px;position:relative;overflow:hidden;background:var(--white)}
 .auth::before,.auth::after{content:"";position:absolute;border-radius:50%;pointer-events:none}
 .auth::before{width:520px;height:520px;background:var(--red-soft);top:-200px;inset-inline-end:-160px}
 .auth::after{width:260px;height:260px;background:var(--red);opacity:.9;bottom:-110px;inset-inline-start:-80px}
 .auth .lang{position:absolute;top:18px;inset-inline-end:18px;z-index:2}
-.acard{
-  position:relative;z-index:1;width:min(400px,100%);background:var(--white);border:1px solid var(--line);
-  border-radius:28px;padding:34px 30px 28px;
-}
+.acard{position:relative;z-index:1;width:min(400px,100%);background:var(--white);border:1px solid var(--line);border-radius:28px;padding:34px 30px 28px;}
 .acard .logo{margin-bottom:22px}
 .acard h1{font-size:1.6rem;font-weight:600;line-height:1.35}
 .acard .sub{color:var(--muted);margin:6px 0 22px}
 .field{display:block;margin-bottom:14px}
 .field span{display:block;font-size:.88rem;font-weight:500;margin-bottom:5px}
-.field input, .field textarea{
-  width:100%;border:1.5px solid var(--line);background:var(--blush);border-radius:14px;padding:11px 15px;
-  transition:border-color .25s,background .25s; color: var(--ink); font-family: inherit;
-}
+.field input, .field textarea{width:100%;border:1.5px solid var(--line);background:var(--blush);border-radius:14px;padding:11px 15px;transition:border-color .25s,background .25s; color: var(--ink); font-family: inherit;}
 .field textarea { resize: vertical; min-height: 80px; }
 .field input:focus, .field textarea:focus{outline:none;border-color:var(--red);background:var(--white)}
 .field input.ltr{direction:ltr;text-align:start}
@@ -65,43 +57,30 @@ button{cursor:pointer;background:none;border:0}
 .switch button{color:var(--red-deep);font-weight:600;margin-inline-start:6px}
 .switch button:hover{text-decoration:underline}
 
-/* ---------- app shell ---------- */
 .app{width:100%;max-width:460px;height:100dvh;margin:0 auto;display:flex;flex-direction:column;background:var(--white);position:relative;overflow:hidden;padding-bottom: 60px;}
-@media(min-width:700px){
-  body{padding:16px}
-  .app{height:min(calc(100dvh - 32px),920px);border-radius:30px;border:1px solid var(--line)}
-}
+@media(min-width:700px){body{padding:16px}.app{height:min(calc(100dvh - 32px),920px);border-radius:30px;border:1px solid var(--line)}}
 .top{background:var(--white);z-index:6;border-bottom:1px solid var(--line);padding:10px 14px 0;position:relative}
 .trow{display:flex;align-items:center;gap:8px}
 .trow .logo{margin-inline-end:auto;font-size:1.15rem}
-.ib{
-  width:38px;height:38px;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--line);
-  color:var(--red-deep);transition:background .25s,border-color .25s;flex:none
-}
+.ib{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--line);color:var(--red-deep);transition:background .25s,border-color .25s;flex:none}
 .ib:hover{border-color:var(--red);background:var(--blush)}
 .ib.solid{background:var(--red);border-color:var(--red);color:#fff}
 .ib.solid:hover{background:var(--red-deep)}
 .ib svg,.rb svg,.nv svg,.bn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .langbtn{border:1.5px solid var(--line);border-radius:999px;padding:0 13px;height:38px;font-weight:600;font-size:.88rem;color:var(--red-deep)}
 .langbtn:hover{border-color:var(--red);background:var(--blush)}
-.me{width:38px;height:38px;border-radius:50%;background:var(--red-soft);color:var(--red-deep);font-weight:700;display:grid;place-items:center;flex:none}
-.menu{
-  position:absolute;top:56px;inset-inline-end:14px;background:var(--white);border:1px solid var(--line);border-radius:18px;
-  padding:12px 14px;z-index:30;min-width:170px;box-shadow:0 14px 40px rgba(229,57,53,.14)
-}
+.menu{position:absolute;top:56px;inset-inline-end:14px;background:var(--white);border:1px solid var(--line);border-radius:18px;padding:12px 14px;z-index:30;min-width:170px;box-shadow:0 14px 40px rgba(229,57,53,.14)}
 .menu .who{font-size:.9rem;color:var(--muted);direction:ltr;text-align:start;margin-bottom:8px}
 .menu button{color:var(--red-deep);font-weight:600;width:100%;text-align:start;padding:6px 0}
 .srow{padding:10px 0 0}
 .srow input{width:100%;border:1.5px solid var(--line);background:var(--blush);border-radius:999px;padding:9px 16px; color: var(--ink);}
 .srow input:focus{outline:none;border-color:var(--red);background:var(--white)}
 
-/* ---------- Feed Tabs (For You / Following) ---------- */
 .feed-tabs{display:flex;justify-content:center;gap:20px;padding:10px 0 0;margin-bottom:2px;border-bottom:1px solid var(--line);}
 .ftab{font-weight:600;font-size:.95rem;color:var(--muted);padding-bottom:8px;position:relative;cursor:pointer;background:none;border:none;}
 .ftab.active{color:var(--ink);}
 .ftab.active::after{content:'';position:absolute;bottom:0;left:20%;right:20%;height:3px;background:var(--red);border-radius:3px;}
 
-/* ---------- Stories Bar ---------- */
 .stories-bar{display:flex;gap:12px;overflow-x:auto;padding:12px 14px;scrollbar-width:none;background:var(--white);border-bottom:1px solid var(--line);}
 .stories-bar::-webkit-scrollbar{display:none}
 .story{display:flex;flex-direction:column;align-items:center;gap:4px;flex:none;cursor:pointer;}
@@ -110,29 +89,14 @@ button{cursor:pointer;background:none;border:0}
 .story .circle span{font-weight:700;color:var(--red);font-size:1.2rem;}
 .story small{font-size:.75rem;color:var(--muted);max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 
-/* ---------- bottom nav ---------- */
-.bottom-nav {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 60px;
-  background: var(--white);
-  border-top: 1px solid var(--line);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  z-index: 10;
-}
-.bn {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  width: 50px; height: 50px; border-radius: 12px; color: var(--muted); transition: all 0.2s;
-}
+.bottom-nav {position: absolute;bottom: 0; left: 0; right: 0;height: 60px;background: var(--white);border-top: 1px solid var(--line);display: flex;justify-content: space-around;align-items: center;z-index: 10;}
+.bn {display: flex; flex-direction: column; align-items: center; justify-content: center;width: 50px; height: 50px; border-radius: 12px; color: var(--muted); transition: all 0.2s;}
 .bn:hover, .bn.active { color: var(--red); }
 .bn.active svg { fill: var(--red-soft); stroke: var(--red); }
 .bn.solid { background: var(--red); color: #fff; border-radius: 50%; width: 44px; height: 44px; }
 .bn.solid:hover { background: var(--red-deep); color: #fff; }
 .bn.solid svg { stroke: #fff; }
 
-/* ---------- reels / feed ---------- */
 .stage{flex:1;min-height:0;position:relative;overflow-y:auto;}
 .stage::-webkit-scrollbar{display:none}
 .reels{height:100%;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none;overscroll-behavior:contain}
@@ -141,30 +105,21 @@ button{cursor:pointer;background:none;border:0}
 .reel .bg{position:absolute;inset:0;background:var(--bg-video); display: flex; align-items: center; justify-content: center;}
 .reel .bg svg,.reel .bg img,.reel .bg video{width:100%;height:100%;display:block;object-fit:contain;}
 .scrim{position:absolute;inset-inline:0;bottom:0;height:48%;background:linear-gradient(transparent,rgba(0,0,0,.72));pointer-events:none}
-.txt{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;
-  padding-block:80px;padding-inline:28px 84px;font-size:clamp(1.35rem,5.2vw,1.9rem);line-height:1.7;font-weight:600;
-  overflow-wrap:anywhere;pointer-events:none
-}
+.txt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding-block:80px;padding-inline:28px 84px;font-size:clamp(1.35rem,5.2vw,1.9rem);line-height:1.7;font-weight:600;overflow-wrap:anywhere;pointer-events:none}
 .meta{position:absolute;inset-inline:0;bottom:0;padding:18px 18px 24px;padding-inline-end:88px;pointer-events:none; color: #fff;}
 .by{display:flex;align-items:center;gap:10px}
 .av{width:34px;height:34px;border-radius:50%;background:var(--red-soft);color:var(--red-deep);display:grid;place-items:center;font-weight:700;flex:none; cursor:pointer;}
 .by b{cursor:pointer; pointer-events:auto;}
-.tag{font-size:.82rem;opacity:.85;margin-inline-start:2px}
 .cap{margin-top:10px;line-height:1.6;max-height:5.8em;overflow:hidden;overflow-wrap:anywhere}
 .rail{position:absolute;inset-inline-end:12px;bottom:26px;display:flex;flex-direction:column;gap:14px;align-items:center;z-index:2}
 .rw{display:flex;flex-direction:column;align-items:center;gap:3px}
-.rb{
-  width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.93);display:grid;place-items:center;
-  color:var(--red-deep);transition:transform .25s,color .25s; touch-action: none;
-}
+.rb{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.93);display:grid;place-items:center;color:var(--red-deep);transition:transform .25s,color .25s; touch-action: none;}
 .rb:hover{transform:scale(1.06)}
 .rb svg{width:23px;height:23px;transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
 .rb.on{color:var(--red)}
 .rb.on svg{fill:var(--red);stroke:var(--red);transform:scale(1.12)}
 .rw small{font-size:.78rem;font-weight:600; color: #fff;}
 
-/* ---------- Profile View ---------- */
 .profile-view{position:absolute;inset:0;background:var(--white);z-index:15;display:flex;flex-direction:column;overflow-y:auto;padding-bottom:60px;}
 .profile-header{padding:20px 16px;display:flex;flex-direction:column;align-items:center;text-align:center;border-bottom:1px solid var(--line);}
 .profile-header .big-av{width:80px;height:80px;border-radius:50%;background:var(--red-soft);color:var(--red-deep);font-size:2rem;font-weight:700;display:grid;place-items:center;margin-bottom:10px;}
@@ -182,18 +137,9 @@ button{cursor:pointer;background:none;border:0}
 .profile-posts .grid-item img,.profile-posts .grid-item video{width:100%;height:100%;object-fit:cover;}
 .profile-posts .grid-item .text-preview{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:10px;text-align:center;font-size:.8rem;background:var(--red-soft);color:var(--ink);overflow:hidden;}
 
-/* ---------- Edit Profile Dialog ---------- */
-.edit-profile-dialog{padding:20px;}
-.edit-profile-dialog h2{margin-bottom:16px;font-size:1.2rem;}
-
-/* ---------- Comments Sheet ---------- */
 .veil{position:absolute;inset:0;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .3s;z-index:20}
 .veil.open{opacity:1;pointer-events:auto}
-.sheet{
-  position:absolute;inset-inline:0;bottom:0;height:64%;background:var(--white);border-radius:26px 26px 0 0;z-index:21;
-  transform:translateY(105%);transition:transform .4s cubic-bezier(.2,.9,.3,1);display:flex;flex-direction:column;
-  padding:16px 18px 14px;box-shadow:0 -10px 40px rgba(0,0,0,.15)
-}
+.sheet{position:absolute;inset-inline:0;bottom:0;height:64%;background:var(--white);border-radius:26px 26px 0 0;z-index:21;transform:translateY(105%);transition:transform .4s cubic-bezier(.2,.9,.3,1);display:flex;flex-direction:column;padding:16px 18px 14px;box-shadow:0 -10px 40px rgba(0,0,0,.15)}
 .sheet.open{transform:none}
 .sh-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .sh-h h2{font-size:1.05rem;font-weight:600}
@@ -206,21 +152,14 @@ button{cursor:pointer;background:none;border:0}
 .cbox input{flex:1;min-width:0;border:1.5px solid var(--line);border-radius:999px;padding:9px 16px;background:var(--blush); color: var(--ink);}
 .cbox input:focus{outline:none;border-color:var(--red);background:var(--white)}
 
-/* ---------- Composer / Dialogs ---------- */
-dialog{
-  border:0;border-radius:26px;padding:0;width:min(520px,94vw);background:var(--white);color:var(--ink);margin:auto;
-  box-shadow:0 30px 80px rgba(0,0,0,.18)
-}
+dialog{border:0;border-radius:26px;padding:0;width:min(520px,94vw);background:var(--white);color:var(--ink);margin:auto;box-shadow:0 30px 80px rgba(0,0,0,.18)}
 dialog[open]{animation:dlg .35s cubic-bezier(.2,.9,.3,1)}
 dialog::backdrop{background:rgba(0,0,0,.4);backdrop-filter:blur(6px)}
 @keyframes dlg{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
 .composer{padding:26px 24px 22px;position:relative}
 .composer h2{font-size:1.25rem;font-weight:600;margin-bottom:14px}
 .composer .x{position:absolute;top:16px;inset-inline-end:16px;width:36px;height:36px}
-.composer textarea{
-  width:100%;min-height:130px;resize:vertical;border:1.5px solid var(--line);border-radius:18px;padding:13px 16px;
-  background:var(--blush);line-height:1.7; color: var(--ink);
-}
+.composer textarea{width:100%;min-height:130px;resize:vertical;border:1.5px solid var(--line);border-radius:18px;padding:13px 16px;background:var(--blush);line-height:1.7; color: var(--ink);}
 .composer textarea:focus{outline:none;border-color:var(--red);background:var(--white)}
 .crow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
 .fname{font-size:.88rem;color:var(--muted);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;direction:ltr}
@@ -228,20 +167,15 @@ dialog::backdrop{background:rgba(0,0,0,.4);backdrop-filter:blur(6px)}
 .moods small{color:var(--muted);margin-inline-end:4px}
 .mood{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);transition:transform .2s,border-color .2s}
 .mood[aria-pressed="true"]{border-color:var(--red-deep);transform:scale(1.15)}
-.composer select{border:1.5px solid var(--line);border-radius:999px;padding:9px 14px;background:var(--white); color: var(--ink);}
 .cfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px;flex-wrap:wrap}
 
-.toast{
-  position:fixed;bottom:80px;inset-inline:0;margin-inline:auto;width:max-content;max-width:90vw;background:var(--ink);color:var(--white);
-  padding:11px 22px;border-radius:999px;font-size:.92rem;opacity:0;transform:translateY(12px);pointer-events:none;transition:all .35s;z-index:60
-}
+.toast{position:fixed;bottom:80px;inset-inline:0;margin-inline:auto;width:max-content;max-width:90vw;background:var(--ink);color:var(--white);padding:11px 22px;border-radius:999px;font-size:.92rem;opacity:0;transform:translateY(12px);pointer-events:none;transition:all .35s;z-index:60}
 .toast.show{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reels{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 
-<!-- ============ AUTH ============ -->
 <section class="auth" id="auth">
   <button class="langbtn lang" data-act="lang" id="authLang"></button>
   <div class="acard">
@@ -259,15 +193,12 @@ dialog::backdrop{background:rgba(0,0,0,.4);backdrop-filter:blur(6px)}
   </div>
 </section>
 
-<!-- ============ APP ============ -->
 <div class="app" id="app" hidden>
   <header class="top">
     <div class="trow">
       <div class="logo"><span class="dot" aria-hidden="true"></span><span data-t="brand"></span></div>
     </div>
     <div class="srow" id="srow" hidden><input id="q" type="search" autocomplete="off"></div>
-    
-    <!-- Feed Tabs (For You / Following) -->
     <nav class="feed-tabs" id="feedTabs">
       <button class="ftab active" data-act="feedTab" data-tab="foryou" data-t="forYou"></button>
       <button class="ftab" data-act="feedTab" data-tab="following" data-t="following"></button>
@@ -275,13 +206,10 @@ dialog::backdrop{background:rgba(0,0,0,.4);backdrop-filter:blur(6px)}
   </header>
   
   <div class="stage">
-    <!-- Stories Bar -->
     <div class="stories-bar" id="storiesBar"></div>
-    
     <div class="reels" id="reels"></div>
   </div>
   
-  <!-- Bottom Navigation -->
   <nav class="bottom-nav">
     <button class="bn active" data-act="home" data-label="home"><svg viewBox="0 0 24 24"><path d="M3 9.5 12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V9.5z"/></svg></button>
     <button class="bn" data-act="search" id="searchBtn" data-label="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.500 4.500"/></svg></button>
@@ -301,13 +229,11 @@ dialog::backdrop{background:rgba(0,0,0,.4);backdrop-filter:blur(6px)}
   <aside class="sheet" id="sheet" aria-live="polite"></aside>
 </div>
 
-<!-- Profile View -->
 <div class="profile-view" id="profileView" hidden>
   <div class="profile-header" id="profileHeader"></div>
   <div class="profile-posts" id="profilePosts"></div>
 </div>
 
-<!-- ============ DIALOGS ============ -->
 <dialog id="composeDlg">
   <div class="composer">
     <button class="ib x" data-act="closeCompose" data-label="close"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
@@ -390,50 +316,64 @@ const MOODS=[
  {bg:'#FFEBEE',ink:'#C62828',s1:'#FFFFFF',s2:'#EF9A9A'}
 ];
 
-/* ================= Mock Data (for testing) ================= */
 const MOCK_USERS = [
   {name:'Ali', user:'ali', bio:'Just chilling', avatar:''},
   {name:'Sara', user:'sara', bio:'Art lover', avatar:''},
   {name:'Reza', user:'reza', bio:'Tech geek', avatar:''}
 ];
 
-/* ================= state & persistence ================= */
-const STORAGE_KEY = 'w_app_state_v2';
+/* ================= Safe Storage & State ================= */
+const STORAGE_KEY = 'w_app_state_v3'; // Version bumped to clear old corrupted data
+
 const defaultState = {
   lang:'en', mode:'signup', user:null, accounts:[], 
   view: 'feed', feedTab: 'foryou', targetProfile: null,
-  posts:[], liked:[], saved:[], following:[], followers:['ali', 'sara'], // Default followers for testing Twin
-  openId:null, mood:0, file:null, nextId:1, darkMode:true, // Dark mode default
+  posts:[], liked:[], saved:[], following:[], followers:['ali', 'sara'], 
+  openId:null, mood:0, file:null, nextId:1, darkMode:true, 
   stories: []
 };
 
 function loadState() {
   try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    if (saved) return saved;
-  } catch(e) { console.error("Error loading state", e); }
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return defaultState;
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === 'object') return parsed;
+  } catch(e) { 
+    console.error("Error loading state, clearing corrupted data.", e); 
+    localStorage.removeItem(STORAGE_KEY);
+  }
   return defaultState;
 }
 
+const loadedData = loadState();
+
 const S = {
   ...defaultState,
-  ...loadState(),
-  liked: new Set(loadState().liked || []),
-  saved: new Set(loadState().saved || []),
-  following: new Set(loadState().following || []),
-  followers: new Set(loadState().followers || []),
-  posts: (loadState().posts || []).filter(p => !p.media)
+  ...loadedData,
+  liked: new Set(Array.isArray(loadedData.liked) ? loadedData.liked : []),
+  saved: new Set(Array.isArray(loadedData.saved) ? loadedData.saved : []),
+  following: new Set(Array.isArray(loadedData.following) ? loadedData.following : []),
+  followers: new Set(Array.isArray(loadedData.followers) ? loadedData.followers : []),
+  posts: Array.isArray(loadedData.posts) ? loadedData.posts.filter(p => !p.media) : [],
+  accounts: Array.isArray(loadedData.accounts) ? loadedData.accounts : [],
+  stories: Array.isArray(loadedData.stories) ? loadedData.stories : []
 };
 
 function saveState() {
-  const stateToSave = {
-    lang: S.lang, mode: S.mode, user: S.user, accounts: S.accounts,
-    view: S.view, feedTab: S.feedTab, targetProfile: S.targetProfile,
-    posts: S.posts.filter(p => !p.media), liked: Array.from(S.liked), saved: Array.from(S.saved),
-    following: Array.from(S.following), followers: Array.from(S.followers),
-    nextId: S.nextId, darkMode: S.darkMode, stories: S.stories
-  };
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
+  try {
+    const stateToSave = {
+      lang: S.lang, mode: S.mode, user: S.user, accounts: S.accounts,
+      view: S.view, feedTab: S.feedTab, targetProfile: S.targetProfile,
+      posts: S.posts.filter(p => !p.media), // Filter out blob URLs to prevent crashes
+      liked: Array.from(S.liked), saved: Array.from(S.saved),
+      following: Array.from(S.following), followers: Array.from(S.followers),
+      nextId: S.nextId, darkMode: S.darkMode, stories: S.stories
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
+  } catch(e) {
+    console.error("Error saving state", e);
+  }
 }
 
 const $=s=>document.querySelector(s);
@@ -449,7 +389,6 @@ const IC={
  x:'<svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 6l12 12M18 6 6 18"/></svg>'
 };
 
-/* ================= language ================= */
 function applyLang(){
   const l=S.lang;
   document.documentElement.lang=l; document.documentElement.dir=l==='fa'?'rtl':'ltr';
@@ -459,13 +398,12 @@ function applyLang(){
   $('#authLang').textContent=tr('lang');
   $('#q').placeholder=tr('searchPh'); $('#cText').placeholder=tr('cPh');
   renderAuth(); renderMoods();
-  if(S.user){
+  if(S.user && S.user.user){
     renderApp();
     if(S.openId) renderSheet();
   }
 }
 
-/* ================= auth ================= */
 function renderAuth(){
   const su=S.mode==='signup';
   $('#aTitle').textContent=tr(su?'signupTitle':'loginTitle');
@@ -508,7 +446,6 @@ function logout(){
   saveState();
 }
 
-/* ================= App Navigation & Views ================= */
 function renderApp() {
   if (S.view === 'profile') {
     $('#profileView').hidden = false;
@@ -523,7 +460,6 @@ function renderApp() {
   setH();
 }
 
-/* ================= Stories ================= */
 function renderStories() {
   const bar = $('#storiesBar');
   let html = `<div class="story" data-act="addStory"><div class="circle"><span>+</span></div><small>${tr('addMedia')}</small></div>`;
@@ -533,7 +469,6 @@ function renderStories() {
   bar.innerHTML = html;
 }
 
-/* ================= Feed ================= */
 function visible(){
   const q=S.q.trim().toLowerCase();
   let list = S.posts;
@@ -599,8 +534,8 @@ function observe(){
 function setH(){const r=$('#reels');if(r)r.style.setProperty('--h',r.clientHeight+'px')}
 window.addEventListener('resize',()=>{if(S.user)setH()});
 
-/* ================= Profile ================= */
 function renderProfile(username) {
+  if (!username && S.user) username = S.user.user;
   const isMe = username === S.user.user;
   const acc = isMe ? S.user : (S.accounts.find(a => a.user === username) || MOCK_USERS.find(u => u.user === username));
   if (!acc) return;
@@ -637,7 +572,6 @@ function renderProfile(username) {
   }).join('') : `<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--muted);">${tr('empty')}</div>`;
 }
 
-/* ================= Comments ================= */
 function renderSheet(){
   const p=S.posts.find(x=>x.id===S.openId); if(!p) return;
   const list=p.cm.length?p.cm.map(c=>`<div class="cm"><span class="av">${esc(ini(c.a))}</span><div><b>${esc(c.a)}</b><br><span dir="auto">${esc(c.t)}</span></div></div>`).join(''):`<p class="none">${tr('noCm')}</p>`;
@@ -648,7 +582,6 @@ function renderSheet(){
 function openSheet(id){S.openId=id;renderSheet();$('#sheet').classList.add('open');$('#veil').classList.add('open')}
 function closeSheet(){S.openId=null;$('#sheet').classList.remove('open');$('#veil').classList.remove('open')}
 
-/* ================= Composer ================= */
 function renderMoods(){
   const box=$('#moods'); if(!box) return;
   box.querySelectorAll('.mood').forEach(b=>b.remove());
@@ -670,7 +603,6 @@ let tt;
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),1800)}
 function scrollReels(dir){const r=$('#reels');r.scrollBy({top:dir*r.clientHeight,behavior:'smooth'})}
 
-/* ================= Long Press Logic ================= */
 let pressTimer;
 let isLongPress = false;
 
@@ -682,7 +614,7 @@ document.addEventListener('pointerdown', e => {
       isLongPress = true;
       const id = +likeBtn.dataset.id;
       openRepostDialog(id);
-    }, 600); // 600ms for long press
+    }, 600);
   }
 });
 
@@ -694,7 +626,6 @@ document.addEventListener('pointerleave', e => {
   if (pressTimer) clearTimeout(pressTimer);
 });
 
-/* ================= Repost ================= */
 let repostTargetId = null;
 function openRepostDialog(id) {
   repostTargetId = id;
@@ -702,7 +633,6 @@ function openRepostDialog(id) {
   $('#repostDlg').showModal();
 }
 
-/* ================= Events ================= */
 document.addEventListener('click',e=>{
   if(!e.target.closest('#menu,#meBtn')) $('#menu').hidden=true;
   if(e.target.id==='composeDlg'){e.target.close();return}
@@ -713,7 +643,6 @@ document.addEventListener('click',e=>{
   if (!el) return;
   const a=el.dataset.act, id=+el.dataset.id, user=el.dataset.user;
 
-  // Prevent like action if it was a long press
   if (a === 'like' && isLongPress) {
     isLongPress = false;
     return;
@@ -756,16 +685,13 @@ document.addEventListener('click',e=>{
       if (!newName || !/^[a-z0-9_]{3,20}$/.test(newUser)) { toast(tr('errUser')); break; }
       if (newUser !== S.user.user && S.accounts.some(a=>a.user===newUser)) { toast(tr('errTaken')); break; }
       
-      // Update in accounts
       const acc = S.accounts.find(a => a.user === S.user.user);
       if (acc) { acc.name = newName; acc.user = newUser; acc.bio = newBio; }
       
-      // Update current user
       S.user.name = newName;
       S.user.user = newUser;
       S.user.bio = newBio;
 
-      // Update posts
       S.posts.forEach(p => { if (p.handle === S.user.user) { p.author = newName; p.handle = newUser; } });
 
       $('#editProfileDlg').close();
@@ -775,11 +701,8 @@ document.addEventListener('click',e=>{
       break;
     }
     case 'toggleFollow': {
-      if (S.following.has(user)) {
-        S.following.delete(user);
-      } else {
-        S.following.add(user);
-      }
+      if (S.following.has(user)) S.following.delete(user);
+      else S.following.add(user);
       saveState();
       renderProfile(user);
       break;
@@ -814,7 +737,7 @@ document.addEventListener('click',e=>{
     }
     case 'like': S.liked.has(id)?S.liked.delete(id):S.liked.add(id); updateRail(id); saveState(); break;
     case 'save': if(S.saved.has(id)){S.saved.delete(id);toast(tr('unsaved'))}else{S.saved.add(id);toast(tr('saved'))} updateRail(id); saveState(); break;
-    case 'share': toast(tr('share') + ' ...'); break; // Mock share
+    case 'share': toast(tr('share') + ' ...'); break; 
     case 'comment': openSheet(id); break;
     case 'closeSheet': closeSheet(); break;
     case 'sendCm': {
@@ -851,10 +774,18 @@ document.addEventListener('click',e=>{
 });
 $('#q').addEventListener('input',e=>{S.q=e.target.value;renderReels()});
 
-/* ================= init ================= */
+/* ================= Init ================= */
 if (S.darkMode) document.body.classList.add('dark');
 applyLang();
-if (S.user) enter(S.user, true);
+
+// Auto-login with strict validation
+if (S.user && S.user.user && S.user.pass) {
+  enter(S.user, true);
+} else {
+  // If user data is incomplete, force logout cleanly
+  S.user = null;
+  logout();
+}
 </script>
 </body>
 </html>
