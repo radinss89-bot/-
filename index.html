@@ -254,7 +254,7 @@ dialog::backdrop{background:rgba(0,0,0,.4);backdrop-filter:blur(6px)}
     <div class="reels" id="reels"></div>
   </div>
   
-  <!-- Bottom Navigation (TikTok/Instagram Style) -->
+  <!-- Bottom Navigation -->
   <nav class="bottom-nav">
     <button class="bn" data-act="home" data-label="home"><svg viewBox="0 0 24 24"><path d="M3 9.5 12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V9.5z"/></svg></button>
     <button class="bn" data-act="search" id="searchBtn" data-label="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.500 4.500"/></svg></button>
@@ -336,8 +336,44 @@ const MOODS=[
  {bg:'#FFEBEE',ink:'#C62828',s1:'#FFFFFF',s2:'#EF9A9A'}
 ];
 
-/* ================= state ================= */
-const S={lang:'en',mode:'signup',user:null,accounts:[],topic:'all',q:'',posts:[],liked:new Set(),saved:new Set(),openId:null,mood:0,file:null,nextId:1,darkMode:false};
+/* ================= state & persistence ================= */
+const STORAGE_KEY = 'w_app_state_v1';
+const defaultState = {
+  lang:'en', mode:'signup', user:null, accounts:[], topic:'all', q:'',
+  posts:[], liked:[], saved:[], openId:null, mood:0, file:null, nextId:1, darkMode:false
+};
+
+function loadState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (saved) return saved;
+  } catch(e) { console.error("Error loading state", e); }
+  return defaultState;
+}
+
+const S = {
+  ...defaultState,
+  ...loadState(),
+  liked: new Set(loadState().liked || []),
+  saved: new Set(loadState().saved || []),
+  posts: (loadState().posts || []).filter(p => !p.media) // Keep only text posts to avoid broken media URLs
+};
+
+function saveState() {
+  const stateToSave = {
+    lang: S.lang,
+    mode: S.mode,
+    user: S.user,
+    accounts: S.accounts,
+    posts: S.posts.filter(p => !p.media), // Don't save blob URLs
+    liked: Array.from(S.liked),
+    saved: Array.from(S.saved),
+    nextId: S.nextId,
+    darkMode: S.darkMode
+  };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
+}
+
 const $=s=>document.querySelector(s);
 const tr=k=>T[S.lang][k];
 const fmt=n=>n.toLocaleString(S.lang==='fa'?'fa-IR':'en-US');
@@ -396,7 +432,7 @@ $('#authForm').addEventListener('submit',e=>{
     enter(acc);
   }
 });
-function enter(acc){
+function enter(acc, skipSave = false){
   S.user=acc; $('#aErr').textContent='';
   $('#fName').value='';$('#fUser').value='';$('#fPass').value='';
   $('#auth').hidden=true; $('#app').hidden=false; $('#nav').hidden=false;
@@ -404,10 +440,12 @@ function enter(acc){
   $('#meName').textContent='@'+acc.user;
   S.topic='all'; S.q=''; $('#q').value='';
   renderChips(); setH(); renderReels();
+  if (!skipSave) saveState();
 }
 function logout(){
   S.user=null; S.mode='login'; closeSheet(); $('#menu').hidden=true;
   $('#app').hidden=true; $('#nav').hidden=true; $('#auth').hidden=false; renderAuth();
+  saveState();
 }
 
 /* ================= feed ================= */
@@ -476,7 +514,7 @@ $('#reels').addEventListener('click',e=>{
   const id=+r.dataset.id, now=Date.now();
   if(now-lastTap<300&&lastId===id){
     clearTimeout(tapT); lastTap=0;
-    if(!S.liked.has(id)){S.liked.add(id);updateRail(id)}
+    if(!S.liked.has(id)){S.liked.add(id);updateRail(id); saveState();}
     const h=document.createElement('div');h.className='popheart';h.innerHTML=IC.heart;r.appendChild(h);setTimeout(()=>h.remove(),850);
   }else{
     lastTap=now; lastId=id; clearTimeout(tapT);
@@ -523,13 +561,14 @@ document.addEventListener('click',e=>{
   const el=e.target.closest('[data-act]'); if(!el) return;
   const a=el.dataset.act, id=+el.dataset.id;
   switch(a){
-    case 'lang': S.lang=S.lang==='en'?'fa':'en'; applyLang(); break;
+    case 'lang': S.lang=S.lang==='en'?'fa':'en'; applyLang(); saveState(); break;
     case 'mode': S.mode=S.mode==='signup'?'login':'signup'; $('#aErr').textContent=''; renderAuth(); break;
     case 'logout': logout(); break;
     case 'menu': $('#menu').hidden=!$('#menu').hidden; break;
     case 'toggleDark': 
       S.darkMode = !S.darkMode;
       document.body.classList.toggle('dark', S.darkMode);
+      saveState();
       break;
     case 'home': 
       $('#reels').scrollTo({top:0, behavior:'smooth'}); 
@@ -542,14 +581,14 @@ document.addEventListener('click',e=>{
       setH(); 
       break;}
     case 'chip': S.topic=el.dataset.k; renderChips(); renderReels(); break;
-    case 'like': S.liked.has(id)?S.liked.delete(id):S.liked.add(id); updateRail(id); break;
-    case 'save': if(S.saved.has(id)){S.saved.delete(id);toast(tr('unsaved'))}else{S.saved.add(id);toast(tr('saved'))} updateRail(id); break;
+    case 'like': S.liked.has(id)?S.liked.delete(id):S.liked.add(id); updateRail(id); saveState(); break;
+    case 'save': if(S.saved.has(id)){S.saved.delete(id);toast(tr('unsaved'))}else{S.saved.add(id);toast(tr('saved'))} updateRail(id); saveState(); break;
     case 'comment': openSheet(id); break;
     case 'closeSheet': closeSheet(); break;
     case 'sendCm': {
       const v=$('#cmIn').value.trim(); if(!v) break;
       const p=S.posts.find(x=>x.id===S.openId); p.cm.push({a:S.user.name,t:v});
-      renderSheet(); updateRail(p.id); const c=$('#clist'); c.scrollTop=c.scrollHeight; break;}
+      renderSheet(); updateRail(p.id); saveState(); const c=$('#clist'); c.scrollTop=c.scrollHeight; break;}
     case 'up': scrollReels(-1); break;
     case 'down': scrollReels(1); break;
     case 'compose': $('#composeDlg').showModal(); $('#cText').focus(); break;
@@ -562,7 +601,7 @@ document.addEventListener('click',e=>{
       const post={id:S.nextId++,author:S.user.name,handle:S.user.user,topic:$('#cTopic').value,text,mood:S.mood,likes:0,cm:[],
         media:S.file?{type:S.file.type.startsWith('video')?'video':'image',url:URL.createObjectURL(S.file)}:null};
       S.posts.unshift(post); $('#composeDlg').close(); resetComposer();
-      S.topic='all'; S.q=''; $('#q').value=''; renderChips(); renderReels(); toast(tr('published')); break;}
+      S.topic='all'; S.q=''; $('#q').value=''; renderChips(); renderReels(); toast(tr('published')); saveState(); break;}
   }
 });
 $('#q').addEventListener('input',e=>{S.q=e.target.value;renderReels()});
@@ -574,7 +613,17 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowUp'){e.preventDefault();scrollReels(-1)}
 });
 
+/* ================= init ================= */
+// Apply saved theme
+if (S.darkMode) document.body.classList.add('dark');
+
+// Apply saved language
 applyLang();
+
+// Auto-login if user exists
+if (S.user) {
+  enter(S.user, true);
+}
 </script>
 </body>
 </html>
